@@ -1,3 +1,4 @@
+/// Calculate the collatz steps for the specified number
 pub fn get_steps(number: u128) -> Vec<u128> {
     let mut next = number;
     let mut steps = vec![];
@@ -15,6 +16,7 @@ pub fn get_steps(number: u128) -> Vec<u128> {
     steps
 }
 
+/// Count the number of collatz steps for the specified number
 pub fn count_steps(number: u128) -> u128 {
     let mut next = number;
     let mut steps = 0;
