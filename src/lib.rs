@@ -3,15 +3,15 @@ pub fn get_steps(number: u128) -> Vec<u128> {
     let mut next = number;
     let mut steps = vec![];
     loop {
+        if next <= 1 {
+            break;
+        }
         next = if next % 2 == 0 {
             next / 2
         } else {
             3 * next + 1
         };
         steps.push(next);
-        if next == 1 {
-            break;
-        }
     }
     steps
 }
@@ -21,6 +21,9 @@ pub fn count_steps(number: u128) -> u128 {
     let mut next = number;
     let mut steps = 0;
     loop {
+        if next <= 1 {
+            break;
+        }
         next = if next % 2 == 0 {
             steps += 1;
             next / 2
@@ -28,9 +31,6 @@ pub fn count_steps(number: u128) -> u128 {
             steps += 2;
             (3 * next + 1) / 2
         };
-        if next == 1 {
-            break;
-        }
     }
     steps
 }
@@ -42,6 +42,10 @@ mod tests {
     #[test]
     fn test_count_steps() {
         let numbers = [
+            0,
+            1,
+            2,
+            4,
             9,
             97,
             871,
@@ -51,7 +55,7 @@ mod tests {
             8_400_511,
             931_386_509_544_713_451,
         ];
-        let steps = [19, 118, 178, 261, 350, 524, 685, 2283];
+        let steps = [0, 0, 1, 2, 19, 118, 178, 261, 350, 524, 685, 2283];
         for (i, n) in numbers.iter().enumerate() {
             assert_eq!(steps[i], count_steps(*n));
             assert_eq!(steps[i], get_steps(*n).len() as u128);
