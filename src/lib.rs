@@ -1,7 +1,14 @@
-/// Calculate the collatz steps for the specified number
+/// Return a list of containing the collatz steps for the specified number
+/// The initial number will not be part of the list. The list will always end with
+/// the values 4, 2, 1 unless you found a mathematic breakthrough ;-)
+/// The length of the list will be the same as the number returned by count_steps:
+/// get_steps(N).len() == count_steps(N)
 pub fn get_steps(number: u128) -> Vec<u128> {
     let mut next = number;
-    let mut steps = vec![];
+    // Counting the steps first and the pre-allocating the vector with the correct size is actually faster
+    let number_steps = count_steps(number);
+    let mut steps = vec![0; number_steps as usize];
+    let mut index = 0;
     loop {
         if next <= 1 {
             break;
@@ -11,7 +18,8 @@ pub fn get_steps(number: u128) -> Vec<u128> {
         } else {
             3 * next + 1
         };
-        steps.push(next);
+        steps[index] = next;
+        index += 1;
     }
     steps
 }
