@@ -7,7 +7,7 @@
 pub fn get_steps(number: u128) -> Vec<u128> {
     let mut next = number;
     // Counting the steps first and the pre-allocating the vector with the correct size is actually faster
-    let number_steps = count_steps(number);
+    let number_steps = total_stopping_time(number);
     let mut steps = vec![0; number_steps as usize];
     let mut index = 0;
     loop {
@@ -28,7 +28,7 @@ pub fn get_steps(number: u128) -> Vec<u128> {
 /// Count the number of collatz steps for the specified number
 /// All the steps required to reach 1 will be counted.
 /// For zero the function will return 0
-pub fn count_steps(number: u128) -> u128 {
+pub fn total_stopping_time(number: u128) -> u128 {
     let mut next = number;
     let mut steps = 0;
     loop {
@@ -69,7 +69,7 @@ mod tests {
         ];
         let steps = [0, 0, 1, 2, 19, 118, 178, 261, 350, 524, 685, 2283];
         for (i, n) in numbers.iter().enumerate() {
-            assert_eq!(steps[i], count_steps(*n));
+            assert_eq!(steps[i], total_stopping_time(*n));
             assert_eq!(steps[i], get_steps(*n).len() as u128);
         }
     }
