@@ -3,6 +3,7 @@
 /// the values 4, 2, 1 unless you found a mathematic breakthrough ;-)
 /// The length of the list will be the same as the number returned by count_steps:
 /// get_steps(N).len() == count_steps(N)
+/// For zero the function will return an empty list
 pub fn get_steps(number: u128) -> Vec<u128> {
     let mut next = number;
     // Counting the steps first and the pre-allocating the vector with the correct size is actually faster
@@ -25,6 +26,8 @@ pub fn get_steps(number: u128) -> Vec<u128> {
 }
 
 /// Count the number of collatz steps for the specified number
+/// All the steps required to reach 1 will be counted.
+/// For zero the function will return 0
 pub fn count_steps(number: u128) -> u128 {
     let mut next = number;
     let mut steps = 0;
@@ -36,6 +39,7 @@ pub fn count_steps(number: u128) -> u128 {
             steps += 1;
             next / 2
         } else {
+            // Doing two steps at once is slightly faster
             steps += 2;
             (3 * next + 1) / 2
         };
