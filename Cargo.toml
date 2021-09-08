@@ -16,3 +16,4 @@ categories = ["algorithms", "mathematics", "science"]
 
 [dev-dependencies]
 rayon = "1.5.1"
+textplots = "0.8.0"
