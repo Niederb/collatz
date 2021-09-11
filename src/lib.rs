@@ -1,19 +1,24 @@
-
-struct Collatz {
-    next: u128,
+struct CollatzSequence<T>
+where
+    T: num::Integer + Copy,
+{
+    next: T,
 }
 
-impl Iterator for Collatz {
-    type Item = u128;
-    
+impl<T> Iterator for CollatzSequence<T>
+where
+    T: num::Integer + Copy,
+{
+    type Item = T;
+
     fn next(&mut self) -> Option<Self::Item> {
-        if self.next <= 1 {
+        if self.next <= T::one() {
             return None;
         }
-        self.next = if self.next % 2 == 0 {
-            self.next / 2
+        self.next = if self.next % (T::one() + T::one()) == T::zero() {
+            self.next / (T::one() + T::one())
         } else {
-            3 * self.next + 1
+            (T::one() + T::one() + T::one()) * self.next + T::one()
         };
         Some(self.next)
     }
@@ -26,7 +31,7 @@ impl Iterator for Collatz {
 /// get_steps(N).len() == count_steps(N)
 /// For zero the function will return an empty list
 pub fn get_steps(number: u128) -> Vec<u128> {
-    let c = Collatz{next: number};
+    let c = CollatzSequence { next: number };
     c.collect()
 }
 
@@ -34,7 +39,7 @@ pub fn get_steps(number: u128) -> Vec<u128> {
 /// All the steps required to reach 1 will be counted.
 /// For zero the function will return 0
 pub fn total_stopping_time(number: u128) -> u128 {
-    let c = Collatz{next: number};
+    let c = CollatzSequence { next: number };
     c.count() as u128
 }
 

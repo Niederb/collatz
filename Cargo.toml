@@ -13,7 +13,8 @@ keywords = ["mathematics", "math", "algorithms", "conjecture"]
 categories = ["algorithms", "mathematics", "science"]
 
 [dependencies]
+num = "0.4"
 
 [dev-dependencies]
-rayon = "1.5.1"
-textplots = "0.8.0"
+rayon = "1.5"
+textplots = "0.8"
