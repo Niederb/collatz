@@ -1,8 +1,21 @@
+/// Struct representing a sequence of Collatz steps for a given number
+/// The number will not be part of the list. The list will always end with
+/// the values 4, 2, 1 unless you found a mathematic breakthrough ;-)
 struct CollatzSequence<T>
 where
     T: num::Integer + Copy,
 {
     next: T,
+}
+
+impl<T> CollatzSequence<T>
+where
+    T: num::Integer + Copy,
+{
+    /// Create a new CollatzSequence for the specified number
+    fn new(number: T) -> CollatzSequence<T> {
+        CollatzSequence { next: number }
+    }
 }
 
 impl<T> Iterator for CollatzSequence<T>
@@ -30,17 +43,23 @@ where
 /// The length of the list will be the same as the number returned by count_steps:
 /// get_steps(N).len() == count_steps(N)
 /// For zero the function will return an empty list
-pub fn get_steps(number: u128) -> Vec<u128> {
-    let c = CollatzSequence { next: number };
+pub fn get_steps<T>(number: T) -> Vec<T>
+where
+    T: num::Integer + Copy,
+{
+    let c = CollatzSequence::new(number);
     c.collect()
 }
 
 /// Count the number of collatz steps for the specified number
 /// All the steps required to reach 1 will be counted.
 /// For zero the function will return 0
-pub fn total_stopping_time(number: u128) -> u128 {
-    let c = CollatzSequence { next: number };
-    c.count() as u128
+pub fn total_stopping_time<T>(number: T) -> usize
+where
+    T: num::Integer + Copy,
+{
+    let c = CollatzSequence::new(number);
+    c.count()
 }
 
 #[cfg(test)]
@@ -65,8 +84,8 @@ mod tests {
         ];
         let steps = [0, 0, 1, 2, 19, 118, 178, 261, 350, 524, 685, 2283];
         for (i, n) in numbers.iter().enumerate() {
-            assert_eq!(steps[i], total_stopping_time(*n));
-            assert_eq!(steps[i], get_steps(*n).len() as u128);
+            assert_eq!(steps[i], total_stopping_time::<u128>(*n));
+            assert_eq!(steps[i], get_steps(*n).len());
         }
     }
 
