@@ -34,22 +34,8 @@ pub fn get_steps(number: u128) -> Vec<u128> {
 /// All the steps required to reach 1 will be counted.
 /// For zero the function will return 0
 pub fn total_stopping_time(number: u128) -> u128 {
-    let mut next = number;
-    let mut steps = 0;
-    loop {
-        if next <= 1 {
-            break;
-        }
-        next = if next % 2 == 0 {
-            steps += 1;
-            next / 2
-        } else {
-            // Doing two steps at once is slightly faster
-            steps += 2;
-            (3 * next + 1) / 2
-        };
-    }
-    steps
+    let c = Collatz{next: number};
+    c.count() as u128
 }
 
 #[cfg(test)]
