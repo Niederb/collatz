@@ -1,6 +1,6 @@
 [package]
 name = "collatz"
-version = "0.5.0"
+version = "0.5.1"
 edition = "2021"
 resolver = "2"
 license = "MIT"
@@ -16,5 +16,5 @@ categories = ["algorithms", "mathematics", "science"]
 num = "0.4"
 
 [dev-dependencies]
-rayon = "1.6"
+rayon = "1.7"
 textplots = "0.8"
